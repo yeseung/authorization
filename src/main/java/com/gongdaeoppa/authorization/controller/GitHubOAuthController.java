@@ -43,7 +43,13 @@ public class GitHubOAuthController {
         String accessToken = (String) session.getAttribute("accessToken");
         
         if (accessToken != null) {
-            githubOAuthService.revokeGitHubToken(accessToken);
+            boolean isRevoked = githubOAuthService.revokeAccessToken(accessToken);
+            
+            if (isRevoked) {
+                System.out.println("Access Token이 무_효화되었습니다.");
+            } else {
+                System.out.println("Access Token 무효_화 실패.");
+            }
             
             session.invalidate();
         }

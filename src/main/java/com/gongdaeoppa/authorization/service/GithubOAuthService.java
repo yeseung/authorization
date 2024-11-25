@@ -15,15 +15,13 @@ public class GithubOAuthService {
     @Value("${github.client-secret}")
     private String clientSecret;
     
-    public boolean revokeGitHubToken(String accessToken) {
+    public boolean revokeAccessToken(String accessToken) {
         String url = "https://api.github.com/applications/" + clientId + "/token";
         
         OkHttpClient client = new OkHttpClient();
         
-        // Basic Auth 헤더 생성
         String credentials = Credentials.basic(clientId, clientSecret);
         
-        // Request Body 생성
         RequestBody body = RequestBody.create(
                 MediaType.parse("application/json"),
                 "{ \"access_token\": \"" + accessToken + "\" }"
