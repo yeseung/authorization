@@ -67,7 +67,6 @@ public class GitHubCallbackController {
             System.out.println("accessToken ==================== " + accessToken);
             
             
-            // Step 2: Access Token으로 사용자 정보 요청
             Request userInfoRequest = new Request.Builder()
                     .url(userInfoUri)
                     .header("Authorization", "Bearer " + accessToken)
@@ -78,7 +77,6 @@ public class GitHubCallbackController {
                     throw new RuntimeException("Failed to fetch user info: " + userInfoResponse.body().string());
                 }
                 
-                //return userInfoResponse.body().string(); // 사용자 정보 반환
                 
                 String result = userInfoResponse.body().string();
                 //System.out.println("userInfoResponse.body().string() = " + result);
@@ -100,7 +98,6 @@ public class GitHubCallbackController {
                 String createdAt = jsonObject.get("created_at").getAsString();
                 String planName = jsonObject.get("plan").getAsJsonObject().get("name").getAsString();
                 
-                // 결과 출력
                 System.out.println("Login::::::::::::::::: " + login);
                 System.out.println("ID:::::::::::::::::::: " + id);
                 System.out.println("Avatar URL:::::::::::: " + avatarUrl);

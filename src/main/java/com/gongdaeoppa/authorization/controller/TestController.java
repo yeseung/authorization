@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +30,7 @@ public class TestController {
 //    }
 
     @GetMapping("/")
-    public String home(Model model){
+    public String home(HttpSession session, Model model){
 
         //새 글
         Test test = new Test();
@@ -40,6 +41,10 @@ public class TestController {
 
         List<Test> list = testService.list();
         model.addAttribute("list", list);
+        
+        System.out.println("session.getAttribute(\"MEMBER_ID\") ==== " + session.getAttribute("MEMBER_ID"));
+        System.out.println("session.getAttribute(\"accessToken\") == " + session.getAttribute("accessToken"));
+        
         return "test";
 
     }

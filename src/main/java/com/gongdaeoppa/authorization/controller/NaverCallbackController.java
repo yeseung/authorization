@@ -37,9 +37,7 @@ public class NaverCallbackController {
     private final OkHttpClient client = new OkHttpClient();
     
     @GetMapping("/oauth/callback")
-    public String callback(HttpServletRequest req, @RequestParam String code, @RequestParam String state) throws Exception {
-        
-        HttpSession session = req.getSession();
+    public String callback(HttpSession session, @RequestParam String code, @RequestParam String state) throws Exception {
         
         Request tokenRequest = new Request.Builder()
                 .url(tokenUri +
@@ -64,7 +62,6 @@ public class NaverCallbackController {
             System.out.println("accessToken ==================== " + accessToken);
             
             
-            // Step 2: Access Token으로 사용자 정보 요청
             Request userInfoRequest = new Request.Builder()
                     .url(userInfoUri)
                     .header("Authorization", "Bearer " + accessToken)
@@ -75,24 +72,19 @@ public class NaverCallbackController {
                     throw new RuntimeException("Failed to fetch user info: " + userInfoResponse.body().string());
                 }
                 
-                //return userInfoResponse.body().string(); // 사용자 정보 반환
-                
                 String result = userInfoResponse.body().string();
                 
                 JsonParser parser = new JsonParser();
                 JsonElement element = parser.parse(result);
                 
-                // "response" 객체 가져오기
                 JsonObject responseObject = element.getAsJsonObject().get("response").getAsJsonObject();
                 
-                // 필요한 정보 추출
                 String id = responseObject.get("id").getAsString();
                 String nickname = responseObject.get("nickname").getAsString();
                 String profileImage = responseObject.get("profile_image").getAsString();
                 String email = responseObject.get("email").getAsString();
                 String name = responseObject.get("name").getAsString();
                 
-                // 결과 출력
                 System.out.println("ID::::::::::::::::: " + id);
                 System.out.println("Nickname::::::::::: " + nickname);
                 System.out.println("Profile Image:::::: " + profileImage);

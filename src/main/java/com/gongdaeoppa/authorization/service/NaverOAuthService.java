@@ -42,14 +42,14 @@ public class NaverOAuthService {
         try (Response response = client.newCall(request).execute()) {
             if (((Response) response).isSuccessful()) {
                 System.out.println("Response: " + response.body().string());
-                return true; // 삭제 성공
+                return true;
             } else {
                 System.out.println("Response Error: " + response.code());
-                return false; // 삭제 실패
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // 예외 처리
+            return false;
         }
     }
     
