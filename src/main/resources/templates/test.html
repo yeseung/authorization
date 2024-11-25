@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>authorization</title>
+
+
+</head>
+<body>
+google : <a href="/authorization/google/login">login</a> | <a href="/authorization/google/logout">logout</a>
+<br><br>
+github : <a href="/authorization/github/login">login</a> | <a href="/authorization/github/logout">logout</a>
+<br><br>
+naver : <a href="/authorization/naver/login">login</a> | <a href="/authorization/naver/logout">logout</a>
+<br><br>
+
+
+<table border="1">
+    <tr th:each="test : ${list}">
+        <td th:text="${test.id}"></td>
+        <td th:text="${test.name}"></td>
+    </tr>
+</table>
+
+
+
+</body>
+</html>
